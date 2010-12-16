@@ -93,6 +93,58 @@ while(true)
   end
   
   if(!nochange)
+    
+    # Something has changed, take a few educated guesses...
+    
+    if(homesource =~ /form(.+)\/form/im)
+      
+      client.post(home, "username=#{username}&password=#{password}&buttonClick=Confirm") do |data| 
+        data =~ /span class="text">(.+)<\/span/im
+        
+        if($1)
+          puts "Found a span in the homepage! Emailing text..."
+          if(use_email)
+            send_email(email, email_password, "Found a span with the text: \"#{$1}\"")
+          end
+        else
+          
+          data.scan(/span class="(\w+)">(.+)<\/span/im) do |spanclass,text|
+            if(spanclass != "mit" && spanclass != "ooa")
+              puts "Found a span in the homepage! Emailing text..."
+              if(use_email)
+                send_email(email, email_password, "Found a span with class \"#{spanclass}\" and text: \"#{text}\"")
+              end
+            end
+          end
+          
+        end
+      end
+      
+    elsif((newredirectsource=client.get_content(home+redirecturl)) =~ /form(.+)\/form/im)
+      
+      client.post(home+redirecturl, "username=#{username}&password=#{password}&buttonClick=Confirm") do |data| 
+        data =~ /span class="text">(.+)<\/span/im
+        
+        if($1)
+          puts "Found a span in the new redirect page! Emailing text..."
+          if(use_email)
+            send_email(email, email_password, "Found a span with the text: \"#{$1}\"")
+          end
+        else
+          
+          data.scan(/span class="(\w+)">(.+)<\/span/im) do |spanclass,text|
+            if(spanclass != "mit" && spanclass != "ooa")
+              puts "Found a span in the new redirect page! Emailing text..."
+              if(use_email)
+                send_email(email, email_password, "Found a span with class \"#{spanclass}\" and text: \"#{text}\"")
+              end
+            end
+          end
+          
+        end
+      
+    end
+    
     if(use_email)
       send_email(email, email_password, "The MIT Admissions Checker found something! Go to decisions.mit.edu to see what happened!")
     end
