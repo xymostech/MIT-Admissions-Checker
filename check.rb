@@ -16,7 +16,7 @@ end
 
 use_email = true
 
-if(email == "INSERT_YOUR_EMAIL_HERE")
+if(email == "INSERT_YOUR_EMAIL_HERE" || !(email.match(/\@gmail\.com/)))
   use_email = false
 end
 
