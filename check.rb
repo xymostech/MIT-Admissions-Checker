@@ -1,9 +1,38 @@
+require 'rubygems'
 require 'httpclient'
+require 'pony'
+
+username = "INSERT_YOUR_USERNAME_HERE" # Put your username for decisions.mit.edu here
+password = "INSERT_YOUR_PASSWORD_HERE" # Put your password for decisions.mit.edu here
+
+email = "INSERT_YOUR_EMAIL_HERE" # put your password for your gmail account here
+email_password = "INSERT_YOUR_EMAIL_PASSWORD_HERE" # put your password for your gmail account here
+
+if(username == "INSERT_YOUR_USERNAME_HERE")
+  abort("Read the comments, you need to change your username (or you chose a really bad username)")
+elsif(password == "INSERT_YOUR_PASSWORD_HERE")
+  abort("Read the comments, you need to change your username (or you chose a really bad password)")
+end
+
+use_email = true
+
+if(email == "INSERT_YOUR_EMAIL_HERE")
+  use_email = false
+end
+
+def send_email(email, password, message)
+  Pony.mail(:to => email, :via => :smtp, :via_options => {
+  :address => 'smtp.gmail.com',
+  :port => '587',
+  :enable_starttls_auto => true,
+  :user_name => email,
+  :password => password,
+  :authentication => :plain
+  },
+  :subject => 'MIT Admissions Checker Alert!', :body => message)
+end
 
 certs='./certs'
-
-username = "INSERT_YOUR_USERNAME_HERE"
-password = "INSERT_YOUR_PASSWORD_HERE"
 
 nochange = true
 
@@ -62,6 +91,14 @@ while(true)
       orig_texthasconfirmation = !!texthasconfirmation
     end
   end
+  
+  if(!nochange)
+    if(use_email)
+      send_email(email, email_password, "The MIT Admissions Checker found something! Go to decisions.mit.edu to see what happened!")
+    end
+  end
+  
+  nochange = true
   
   sleep(300)
 end

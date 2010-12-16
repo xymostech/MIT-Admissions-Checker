@@ -7,6 +7,6 @@ Note, I am not sure what is going to happen when they put out admission decision
 - If the main page redirects you to somewhere other than verify.php
 - If logging into verify.php gives a different result
 
-Hopefully one of these will work, and if it does, it will email you at the address provided.
+Hopefully one of these will work, and if it does, it will email you at the address provided. NOTE: Only gmail accounts work with the email sending thing. Sorry!
 
 Also, I'm taking a few educated guesses about how the final site will work, so it will try to log in if it finds a form in a few of the places.
