@@ -46,6 +46,8 @@ while(true)
   
   # Check main page for changes
   
+  puts "Checking..."
+  
   client = HTTPClient.new()
   client.ssl_config.set_trust_ca(certs)
   
@@ -142,6 +144,7 @@ while(true)
           end
           
         end
+      end
       
     end
     
