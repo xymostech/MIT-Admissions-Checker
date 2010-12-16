@@ -1,8 +1,12 @@
 Checks the MIT website every 5 minutes to see if the admission decision has come yet.
 
+Read the comments in the file to find the things to change so that the script works as you want it to.
+
 Note, I am not sure what is going to happen when they put out admission decisions, so I have taken several different approaches to checking what has changed on the site:
 
 - If the main page redirects you to somewhere other than verify.php
 - If logging into verify.php gives a different result
 
-Hopefully one of these will work, and if it does, it will email you at the address provided. Have fun!
+Hopefully one of these will work, and if it does, it will email you at the address provided.
+
+Also, I'm taking a few educated guesses about how the final site will work, so it will try to log in if it finds a form in a few of the places.
